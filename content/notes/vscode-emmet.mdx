@@ -1,0 +1,164 @@
+---
+title: "提升開發效率的秘密武器：VSCode Emmet"
+category: "VSCode"
+date: "03 September 2025"
+readTime: "6 min. to read"
+excerpt: "在前端開發中，重複手刻 HTML 標籤是每個工程師的日常夢魘。Emmet 正是為此而生——它讓你用幾個字元的縮寫，瞬間展開完整的代碼結構。"
+coverImage: "https://img.yizhe.dev/VSCode-Emmet/cover.png"
+---
+
+## 認識 Emmet：為什麼你需要它？
+
+Emmet 的核心哲學是「縮寫」驅動「展開」。你輸入的是意圖，Emmet 負責幫你打出細節。
+
+舉個例子，輸入：
+
+```
+div.text-xl
+```
+
+按下觸發鍵後，立刻展開為：
+
+```html
+<div class="text-xl"></div>
+```
+
+不只省去角括號與閉合標籤，更強大的是，Emmet 支援**巢狀結構、批次生成、條件屬性**等複雜組合，一行縮寫就能產出數十行 HTML。
+
+---
+
+## 在 VSCode 啟用 Emmet
+
+VSCode 已內建 Emmet，但預設行為有時不夠直覺。以下設定可以讓體驗更順暢。
+
+### 步驟 1：開啟設定檔
+
+1. 按下 `Ctrl + Shift + P`（macOS 為 `Cmd + Shift + P`）開啟命令選擇器
+2. 搜尋並選擇 `Open User Settings (JSON)`
+
+### 步驟 2：加入推薦設定
+
+將以下內容加入你的 `settings.json`：
+
+```json
+{
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact",
+    "html-eex": "html",
+    "vue-html": "html"
+  }
+}
+```
+
+- `triggerExpansionOnTab`：用 Tab 鍵一鍵展開縮寫
+- `showSuggestionsAsSnippets`：讓 Emmet 建議出現在自動完成清單中
+- `includeLanguages`：讓 JSX、TSX、Vue 等框架也享有 Emmet 支援
+
+### 步驟 3：確認運作
+
+在 `.html` 或 `.jsx` 檔案中輸入 `ul>li*3`，按 Tab，若成功展開即代表設定完成。
+
+---
+
+## 基礎語法速查
+
+掌握下表語法，就能應付 80% 的日常開發需求：
+
+| Emmet 縮寫 | 展開結果 | 說明 |
+| :--- | :--- | :--- |
+| `div` | `<div></div>` | 快速產生標籤 |
+| `div.card` | `<div class="card"></div>` | 加入 Class（`.`） |
+| `div#app` | `<div id="app"></div>` | 加入 ID（`#`） |
+| `div.red.bold` | `<div class="red bold"></div>` | 多個 Class 用 `.` 串接 |
+| `input[type=email]` | `<input type="email">` | 自訂屬性用 `[]` |
+| `a{點我前往}` | `<a>點我前往</a>` | 插入文字內容用 `{}` |
+| `ul>li*3` | `<ul>` 內含三個 `<li>` | 子元素用 `>`，重複用 `*` |
+| `div+p+span` | 三個並排兄弟元素 | 同層元素用 `+` |
+| `section>div>p` | 三層巢狀結構 | 多層嵌套連續用 `>` |
+
+---
+
+## 進階語法：解鎖更強大的能力
+
+### 群組與重複
+
+用 `()` 將元素群組後再重複，可以生成複雜的列表結構：
+
+```
+ul>(li>a{選項 $})*5
+```
+
+展開結果：
+
+```html
+<ul>
+  <li><a>選項 1</a></li>
+  <li><a>選項 2</a></li>
+  <li><a>選項 3</a></li>
+  <li><a>選項 4</a></li>
+  <li><a>選項 5</a></li>
+</ul>
+```
+
+`$` 是**自動遞增編號**符號，`$$` 可生成兩位數格式（01、02…）。
+
+### 往上爬一層（`^`）
+
+在深層嵌套後，用 `^` 跳回上一層繼續添加兄弟元素：
+
+```
+div>p>span^button
+```
+
+展開為：
+
+```html
+<div>
+  <p><span></span></p>
+  <button></button>
+</div>
+```
+
+### 隱式標籤
+
+Emmet 會根據父元素自動推斷標籤類型。在 `ul` 內部直接寫 `.item*3`，Emmet 知道你要的是 `li`：
+
+```
+ul>.item*3
+```
+
+展開為：
+
+```html
+<ul>
+  <li class="item"></li>
+  <li class="item"></li>
+  <li class="item"></li>
+</ul>
+```
+
+### 生成 HTML 骨架
+
+在空白 HTML 檔案中輸入 `!` 並按 Tab，立刻產生完整的 HTML5 標準骨架，包含 `<!DOCTYPE>`、`<head>`、`<meta charset>`、`<title>` 等。
+
+---
+
+## CSS 也能用 Emmet
+
+Emmet 不只服務 HTML，在 CSS 中同樣好用。在 `.css` 或 `.scss` 檔案裡：
+
+| 縮寫 | 展開結果 |
+| :--- | :--- |
+| `m10` | `margin: 10px;` |
+| `p20-30` | `padding: 20px 30px;` |
+| `df` | `display: flex;` |
+| `jcc` | `justify-content: center;` |
+| `aic` | `align-items: center;` |
+| `w100p` | `width: 100%;` |
+| `bgc` | `background-color: ;` |
+| `fz16` | `font-size: 16px;` |
+
+組合起來，`df+jcc+aic` 三行縮寫就能快速完成 Flexbox 置中的經典三行設定。
