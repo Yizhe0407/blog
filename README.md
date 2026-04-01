@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# blog.yizhe.dev — 個人部落格
 
-## Getting Started
+以 Next.js App Router 建置的個人部落格，文章以 MDX 撰寫，支援語法高亮、目錄導覽與主題分類。
 
-First, run the development server:
+## 技術棧
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 16** (App Router)
+- **React 19**
+- **TypeScript 5** (strict)
+- **Tailwind CSS 4**
+- **MDX** (`@next/mdx` + `rehype-pretty-code`)
+- **shadcn/ui** + `lucide-react`
+
+## 專案結構
+
+```
+app/
+├── page.tsx              # 首頁（Hero + 最新文章）
+├── notes/
+│   ├── page.tsx          # 文章列表
+│   └── [slug]/page.tsx   # 文章詳頁（MDX + TOC）
+└── topics/page.tsx       # 主題分類頁
+
+content/notes/*.mdx       # 文章來源
+components/               # UI 元件
+lib/posts.ts              # 文章讀取與 heading 擷取
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 本地開發
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+開啟 [http://localhost:3000](http://localhost:3000)。
 
-## Learn More
+## 新增文章
 
-To learn more about Next.js, take a look at the following resources:
+在 `content/notes/` 新增 `.mdx` 檔，檔名即為 slug：
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```mdx
+---
+title: 文章標題
+category: 分類
+date: 2024-01-01
+readTime: 5 min
+excerpt: 摘要文字
+coverImage: https://example.com/image.png (可選)
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+內文...
+```
 
-## Deploy on Vercel
+## 指令
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| 指令 | 說明 |
+|------|------|
+| `pnpm dev` | 啟動開發伺服器 |
+| `pnpm build` | 建置生產版本 |
+| `pnpm start` | 啟動生產伺服器 |
+| `pnpm lint` | 執行 ESLint |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Docker
+
+```bash
+# 建置並啟動（port 3000）
+docker compose up --build
+
+# 背景執行
+docker compose up --build -d
+
+# 停止
+docker compose down
+```
