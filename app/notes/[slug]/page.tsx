@@ -26,7 +26,7 @@ export default async function PostPage({ params }: Props) {
   const related = getAllPosts().filter((p) => p.slug !== slug).slice(0, 2)
 
   return (
-    <div className="mx-auto max-w-[1200px] px-6 pb-20">
+    <div className="mx-auto max-w-[1200px] px-6 pt-10 pb-20">
 
       {/* ── Full-width header ─────────────────────────────────────────── */}
       <div className="mb-8 max-w-[820px] mx-auto xl:max-w-none xl:mx-0">

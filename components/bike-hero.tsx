@@ -71,7 +71,7 @@ export function BikeHero() {
       if (isPortrait) {
         const imgH   = IMG_H * (rect.width / IMG_W)
         const margin = (rect.height - imgH) / 2
-        setOverlayPos({ value: rect.height - margin + 16 })
+        setOverlayPos({ value: margin })
       } else {
         setOverlayPos(null)
       }
@@ -190,7 +190,7 @@ export function BikeHero() {
         {/* Text — top right */}
         <div
           className="absolute top-[100px] sm:top-[140px] right-8 sm:right-24 max-w-[180px] sm:max-w-[240px] flex flex-col gap-2 text-right pointer-events-none"
-          style={overlayPos ? { bottom: overlayPos.value, top: "auto" } : undefined}
+          style={overlayPos ? { top: overlayPos.value + 16, bottom: "auto" } : undefined}
         >
           <p
             className="text-[18px] sm:text-[24px] font-extrabold leading-tight text-[#3f3d39]"
@@ -209,7 +209,7 @@ export function BikeHero() {
         {/* Text — bottom left */}
         <div
           className="absolute bottom-12 sm:bottom-16 left-8 sm:left-24 max-w-[160px] sm:max-w-[220px] flex flex-col gap-1 pointer-events-none"
-          style={overlayPos ? { top: overlayPos.value, bottom: "auto" } : undefined}
+          style={overlayPos ? { bottom: overlayPos.value + 16, top: "auto" } : undefined}
         >
           <p
             className="text-[18px] sm:text-[22px] font-extrabold leading-tight text-[#3f3d39]"

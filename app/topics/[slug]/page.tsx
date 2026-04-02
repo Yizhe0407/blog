@@ -19,7 +19,7 @@ export default async function TopicPage({ params }: Props) {
     <div className="mx-auto max-w-[1440px] px-5 sm:px-8 md:px-12 lg:px-[72px] pb-16">
       {/* Breadcrumb */}
       <nav
-        className="flex items-center gap-1.5 pt-6 text-[13px] text-[#a09890]"
+        className="flex items-center gap-1.5 pt-10 text-[13px] text-[#a09890]"
         aria-label="Breadcrumb"
       >
         <Link href="/topics" className="hover:text-[#6b665e] transition-colors">
