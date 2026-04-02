@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm"
 import rehypePrettyCode from "rehype-pretty-code"
 import { getAllPosts, getPostBySlug, extractHeadings } from "@/lib/posts"
 import { NoteCard } from "@/components/note-card"
-import { TableOfContents, FloatingTableOfContents } from "@/components/table-of-contents"
+import { TableOfContents } from "@/components/table-of-contents"
 import { mdxComponents } from "@/mdx-components"
 
 export async function generateStaticParams() {
@@ -123,8 +123,6 @@ export default async function PostPage({ params }: Props) {
 
       </div>
 
-      {/* Floating TOC for tablet / mobile — outside aside so parent display:none won't hide it */}
-      <FloatingTableOfContents headings={headings} />
     </div>
   )
 }
