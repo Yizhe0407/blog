@@ -7,8 +7,9 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 FROM base AS deps
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile --ignore-scripts && \
+    pnpm rebuild sharp unrs-resolver
 
 # ── 建置階段 ──────────────────────────────────────────────────
 FROM base AS builder
