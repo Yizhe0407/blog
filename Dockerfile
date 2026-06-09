@@ -1,15 +1,14 @@
 FROM node:22-alpine AS base
 
 # 安裝 pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@11.3.0 --activate
 
 # ── 依賴安裝階段 ──────────────────────────────────────────────
 FROM base AS deps
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml ./
-RUN pnpm install --frozen-lockfile --ignore-scripts && \
-    pnpm rebuild sharp unrs-resolver
+RUN pnpm install --frozen-lockfile
 
 # ── 建置階段 ──────────────────────────────────────────────────
 FROM base AS builder
