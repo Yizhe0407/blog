@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Calendar, Clock } from "lucide-react"
 import type { Post } from "@/lib/posts"
 
-export function NoteCard({ post }: { post: Post }) {
+export function NoteCard({ post, priority = false }: { post: Post; priority?: boolean }) {
   return (
     <Link href={`/notes/${post.slug}`} className="group block">
       {/* Image — standalone rounded box, no relation to a "card" container */}
@@ -14,6 +14,7 @@ export function NoteCard({ post }: { post: Post }) {
             alt={post.title}
             width={600}
             height={400}
+            priority={priority}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           />
         )}

@@ -4,6 +4,7 @@ import localFont from "next/font/local"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { PageTransition } from "@/components/page-transition"
+import { HomepageLoader } from "@/components/homepage-loader"
 import "./globals.css"
 
 const comicRelief = Comic_Relief({
@@ -11,6 +12,7 @@ const comicRelief = Comic_Relief({
   subsets: ["latin"],
   variable: "--font-comic-relief",
   display: "swap",
+  adjustFontFallback: false,
 })
 
 const openHuninn = localFont({
@@ -34,6 +36,7 @@ export default function RootLayout({
       className={`${comicRelief.variable} ${openHuninn.variable}`}
     >
       <body className="bg-[#f7f4ee] min-h-screen antialiased flex flex-col">
+        <HomepageLoader />
         <Navbar />
         <main className="flex-1 pt-[84px] sm:pt-[122px]">
           <PageTransition>{children}</PageTransition>

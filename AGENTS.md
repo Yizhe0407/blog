@@ -22,6 +22,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - MDX（`@next/mdx`, `@mdx-js/*`）
 - `gray-matter`（解析 frontmatter）
 - `lucide-react`（圖示）
+- `three` + `@types/three`（首頁 3D Hero 渲染）
 
 ## 常用指令（優先使用 pnpm）
 ```bash
@@ -33,17 +34,22 @@ pnpm start
 
 ## 目錄重點
 - `app/`
-	- `layout.tsx`：全域字型、Navbar、PageTransition、Footer。
-	- `page.tsx`：首頁（Hero + 最新文章卡片）。
+	- `layout.tsx`：全域字型、Navbar、PageTransition、Footer、HomepageLoader（僅 `/` 路由顯示載入動畫）。
+	- `page.tsx`：首頁（BikeHero3D Three.js 3D Hero + 最新文章卡片）。
 	- `notes/page.tsx`：文章列表頁（目前搜尋欄僅 UI，尚未接查詢邏輯）。
 	- `notes/[slug]/page.tsx`：文章詳頁（`generateStaticParams`、`notFound`、MDX 載入、相關文章、目錄）。
 	- `topics/page.tsx`：主題入口卡片頁。
 - `components/`
-	- `navbar.tsx`、`page-transition.tsx`、`table-of-contents.tsx` 為 client component。
+	- `navbar.tsx`、`page-transition.tsx`、`table-of-contents.tsx`、`homepage-loader.tsx`、`bike-hero-3d-loader.tsx` 為 client component。
+	- `bike-hero-3d.tsx`：Three.js 3D 腳踏車 Hero，透過 `bike-hero-3d-loader.tsx`（`dynamic` + `ssr: false`）載入以避免 SSR 問題。
+	- `homepage-loader.tsx` + `page-loader.tsx`：首頁載入動畫，播放 `public/lodding.webm`；HomepageLoader 只在 `pathname === "/"` 時渲染。
 	- 其餘多數元件維持 server component 友善設計。
 - `content/notes/*.mdx`：文章內容來源。
 - `lib/posts.ts`：文章清單、單篇讀取、標題擷取。
 - `mdx-components.tsx`：MDX 元件樣式與 heading id 生成。
+- `public/models/bike.glb`：3D 腳踏車模型（BikeHero3D 使用）。
+- `public/lodding.webm`：首頁載入動畫影片。
+- `next.config.ts`：`/models/*` 與 `/lodding.webm` 設有長效 Cache-Control header（7 天）；`/sequences/*` rewrite 至 CDN。
 
 ## MDX 與資料規範
 - 文章檔名即 slug（例如 `my-post.mdx` -> `/notes/my-post`）。
